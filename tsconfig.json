@@ -1,0 +1,50 @@
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "noEmit": true,
+    "incremental": true,
+    "module": "esnext",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "include": [
+    "next-env.d.ts",
+    ".next/types/**/*.ts",
+    "**/*.ts",
+
+    "**/*.tsx",
+    "app/api/categories/route.js",
+    "app/api/users/register/route.js",
+    "app/api/articles/articles-by-category/route.js",
+    "app/api/users/login/route.js",
+    "app/api/users/logout/route.js",
+    "app/api/users/me/route.js",
+    "app/api/users/all/route.js",
+    "app/api/users/update/route.js",
+    "app/(pages)/profile/page.jsx",
+    "app/(pages)/quiz/page.jsx",
+    "app/(pages)/chat/page.jsx",
+    "app/(pages)/chat/layout.jsx",
+    "app/(pages)/login/page.jsx",
+    "app/(pages)/dashboard/layout.jsx",
+    "app/(pages)/dashboard/page.jsx",
+    "app/(pages)/dashboard/create-user/page.jsx",
+    "app/(pages)/dashboard/edit-user/[userId]/page.jsx",
+    "old_middleware.js",
+    "app/(pages)/dashboard/add-article/page.jsx",
+    "app/(pages)/test-ck/page.jsx"
+  ],
+  "exclude": ["node_modules"]
+}
