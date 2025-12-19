@@ -13,6 +13,7 @@ const AllUsers = () => {
       .get(`${apiURL}/users/all`)
       .then((res) => {
         setUsers(res.data.data);
+        console.log(res.data.data);
       })
       .catch((error) => console.log(error));
   };
@@ -114,12 +115,14 @@ const AllUsers = () => {
                     تعديل
                   </Link>
 
-                  <button
-                    className="btn btn-error text-white"
-                    onClick={(e) => handleDelete(e, user.id)}
-                  >
-                    حدف
-                  </button>
+                  {user.role != "ADMIN" && (
+                    <button
+                      className="btn btn-error text-white"
+                      onClick={(e) => handleDelete(e, user.id)}
+                    >
+                      حدف
+                    </button>
+                  )}
                 </td>
               </tr>
             ))}

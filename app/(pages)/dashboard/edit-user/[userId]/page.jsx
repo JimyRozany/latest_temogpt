@@ -93,78 +93,83 @@ const EditUser = () => {
            value={user.username}
          />
        </label> */}
-          <select
-            className="select w-full max-w-xs border border-secondary"
-            onChange={(e) => setUser({ ...user, role: e.target.value })}
-            defaultValue={user.role}
-            defaultChecked={user.role}
-          >
-            <option>طريقة التعلم</option>
-            <option value={"CHATTING"}>موجة بالمستخدم</option>
-            <option value={"READER"}>موجة بالمحتوي</option>
-          </select>
 
-          <div className="flex items-center gap-2">
-            <label
-              className="label border-none cursor-pointer flex flex-col justify-center gap-1"
-              dir="rtl"
-            >
-              <div className="label-text" dir="rtl">
-                برمجة
+          {user.role != "ADMIN" && (
+            <>
+              <select
+                className="select w-full max-w-xs border border-secondary"
+                onChange={(e) => setUser({ ...user, role: e.target.value })}
+                defaultValue={user.role}
+                defaultChecked={user.role}
+              >
+                <option>طريقة التعلم</option>
+                <option value={"CHATTING"}>موجة بالمستخدم</option>
+                <option value={"READER"}>موجة بالمحتوي</option>
+              </select>
+
+              <div className="flex items-center gap-2">
+                <label
+                  className="label border-none cursor-pointer flex flex-col justify-center gap-1"
+                  dir="rtl"
+                >
+                  <div className="label-text" dir="rtl">
+                    برمجة
+                  </div>
+                  <input
+                    type="checkbox"
+                    className="checkbox checkbox-primary"
+                    defaultChecked={user?.Score[0]?.programming}
+                    onChange={(e) =>
+                      setUser({
+                        ...user,
+                        Score: [
+                          { ...user.Score[0], programming: e.target.checked },
+                        ],
+                      })
+                    }
+                  />
+                </label>
+                <label
+                  className="label border-none cursor-pointer flex flex-col justify-center gap-1"
+                  dir="rtl"
+                >
+                  <div className="label-text" dir="rtl">
+                    تعلم HTML
+                  </div>
+                  <input
+                    type="checkbox"
+                    className="checkbox checkbox-primary"
+                    defaultChecked={user?.Score[0]?.html}
+                    onChange={(e) =>
+                      setUser({
+                        ...user,
+                        Score: [{ ...user.Score[0], html: e.target.checked }],
+                      })
+                    }
+                  />
+                </label>
+                <label
+                  className="label border-none cursor-pointer flex flex-col justify-center gap-1"
+                  dir="rtl"
+                >
+                  <div className="label-text" dir="rtl">
+                    تعلم PHP
+                  </div>
+                  <input
+                    type="checkbox"
+                    className="checkbox checkbox-primary"
+                    defaultChecked={user?.Score[0]?.php}
+                    onChange={(e) =>
+                      setUser({
+                        ...user,
+                        Score: [{ ...user.Score[0], php: e.target.checked }],
+                      })
+                    }
+                  />
+                </label>
               </div>
-              <input
-                type="checkbox"
-                className="checkbox checkbox-primary"
-                defaultChecked={user?.Score[0]?.programming}
-                onChange={(e) =>
-                  setUser({
-                    ...user,
-                    Score: [
-                      { ...user.Score[0], programming: e.target.checked },
-                    ],
-                  })
-                }
-              />
-            </label>
-            <label
-              className="label border-none cursor-pointer flex flex-col justify-center gap-1"
-              dir="rtl"
-            >
-              <div className="label-text" dir="rtl">
-                تعلم HTML
-              </div>
-              <input
-                type="checkbox"
-                className="checkbox checkbox-primary"
-                defaultChecked={user?.Score[0]?.html}
-                onChange={(e) =>
-                  setUser({
-                    ...user,
-                    Score: [{ ...user.Score[0], html: e.target.checked }],
-                  })
-                }
-              />
-            </label>
-            <label
-              className="label border-none cursor-pointer flex flex-col justify-center gap-1"
-              dir="rtl"
-            >
-              <div className="label-text" dir="rtl">
-                تعلم PHP
-              </div>
-              <input
-                type="checkbox"
-                className="checkbox checkbox-primary"
-                defaultChecked={user?.Score[0]?.php}
-                onChange={(e) =>
-                  setUser({
-                    ...user,
-                    Score: [{ ...user.Score[0], php: e.target.checked }],
-                  })
-                }
-              />
-            </label>
-          </div>
+            </>
+          )}
 
           <button
             disabled={loading}
