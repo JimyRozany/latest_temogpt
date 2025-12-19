@@ -21,7 +21,7 @@ const LoginForm = () => {
     if (password === "") return toast.error("password is requier");
     try {
       setLoading(true);
-      const res = await axios.post(`${apiURL}/users/login`, {
+      const res = await axios.post(`api/users/login`, {
         username,
         password,
       });
