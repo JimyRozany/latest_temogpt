@@ -21,15 +21,16 @@ const LoginForm = () => {
     if (password === "") return toast.error("password is requier");
     try {
       setLoading(true);
-      const res = await axios.post(`api/users/login`, {
-        username,
-        password,
-      });
+      const res = await axios.post(
+        "/api/users/login",
+        { username, password },
+        { withCredentials: true }
+      );
       router.replace("/");
 
       // router.refresh();
     } catch (error) {
-      // console.log(error);
+      console.log(error);
       toast.error(` ${error.response.data.message}`);
       setLoading(false);
     }

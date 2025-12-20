@@ -14,6 +14,7 @@ import { setCookie } from "../../../../utils/generateToken";
 export async function POST(request) {
   try {
     const requestData = await request.json();
+    // return Response.json({ message: "login successful" });
 
     const validation = loginSchema.safeParse(requestData);
     if (!validation.success) {
@@ -43,10 +44,7 @@ export async function POST(request) {
     );
 
     if (!isPasswordValid) {
-      return Response.json(
-        { message: "Invalid credentials" },
-        { status: 401 }
-      );
+      return Response.json({ message: "Invalid credentials" }, { status: 401 });
     }
 
     const cookie = setCookie({
@@ -68,7 +66,7 @@ export async function POST(request) {
   } catch (error) {
     console.error("LOGIN ERROR:", error);
     return Response.json(
-      { message: "internal server error" },
+      { message: "internal server error", error },
       { status: 500 }
     );
   }
