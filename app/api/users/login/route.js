@@ -14,7 +14,7 @@ import { setCookie } from "../../../../utils/generateToken";
 export async function POST(request) {
   try {
     const requestData = await request.json();
-    // validation
+
     const validation = loginSchema.safeParse(requestData);
     if (!validation.success) {
       return Response.json(
@@ -25,34 +25,37 @@ export async function POST(request) {
         { status: 400 }
       );
     }
-    // check the user exists or not
+
     const user = await prisma.user.findUnique({
       where: { username: requestData.username },
     });
+
     if (!user) {
       return Response.json(
         { message: "username or password incorrect" },
         { status: 400 }
       );
     }
-    // check the password is correct or not
+
     const isPasswordValid = await bcrypt.compare(
       requestData.password,
       user.password
     );
+
     if (!isPasswordValid) {
-      return Response.json({ message: "Invalid credentials" }, { status: 401 });
+      return Response.json(
+        { message: "Invalid credentials" },
+        { status: 401 }
+      );
     }
 
-    const jwtPayload = {
+    const cookie = setCookie({
       id: user.id,
       username: user.username,
       email: user.email,
       role: user.role,
-    };
-    //generate token and set-cookie
-    const cookie = setCookie(jwtPayload);
-    // return success message
+    });
+
     return Response.json(
       { message: "login successful" },
       {
@@ -63,8 +66,9 @@ export async function POST(request) {
       }
     );
   } catch (error) {
+    console.error("LOGIN ERROR:", error);
     return Response.json(
-      { message: "internal server error ", error },
+      { message: "internal server error" },
       { status: 500 }
     );
   }
