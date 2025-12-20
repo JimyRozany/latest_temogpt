@@ -1,16 +1,16 @@
-import { Geist, Geist_Mono } from "next/font/google";
+// import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { Tajawal } from "next/font/google";
+// import { Tajawal } from "next/font/google";
 import { Toaster } from "sonner";
 import LayoutProvider from "../utils/LayoutProvider";
 
-const tajawal = Tajawal({
-  subsets: ["arabic"],
-  weight: ["200", "400", "500", "700"],
-  style: "normal",
-  subsets: ["arabic"],
-  variable: "--font-tajawal",
-});
+// const tajawal = Tajawal({
+//   subsets: ["arabic"],
+//   weight: ["200", "400", "500", "700"],
+//   style: "normal",
+//   subsets: ["arabic"],
+//   variable: "--font-tajawal",
+// });
 
 export const metadata = {
   title: "TemoGPT",
@@ -21,7 +21,8 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" data-theme="light">
-      <body className={`${tajawal.variable} antialiased font-tajawal`}>
+      {/* <body className={`${tajawal.variable} antialiased font-tajawal`}> */}
+      <body className={` antialiased font-tajawal`}>
         <LayoutProvider>{children}</LayoutProvider>
         <Toaster
           toastOptions={{
