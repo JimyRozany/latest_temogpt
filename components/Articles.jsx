@@ -31,7 +31,7 @@ const Articles = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get(`${apiURL}/categories`);
+      const response = await axios.get(`/api/categories`);
       const cats = response.data.data;
       setCategories(cats);
     } catch (error) {
@@ -40,7 +40,7 @@ const Articles = () => {
   };
   const fetchArticles = async () => {
     try {
-      const response = await axios.get(`${apiURL}/articles`);
+      const response = await axios.get(`/api/articles`);
       setArticles(response.data.data);
     } catch (error) {
       console.error(error);
@@ -48,7 +48,7 @@ const Articles = () => {
   };
   const fetchUser = async () => {
     try {
-      const response = await axios.get(`${apiURL}/me-two`);
+      const response = await axios.get(`/api/me-two`);
       setUser(response.data.user);
     } catch (error) {
       console.error(error);
@@ -65,7 +65,7 @@ const Articles = () => {
     } else {
       // check if user opened quiz
       axios
-        .post(`${apiURL}/open-quiz/${user.id}`, { categoryId: cat.id })
+        .post(`/api/open-quiz/${user.id}`, { categoryId: cat.id })
         .then((res) => {
           console.log(
             "response from POST open quiz / USER ID And Category ID  ",
@@ -92,7 +92,7 @@ const Articles = () => {
   // get articles when  click on category button
   const getArticlesByCategory = async (catId) => {
     axios
-      .post(`${apiURL}/articles/articles-by-category`, {
+      .post(`api/articles/articles-by-category`, {
         categoryId: catId,
       })
       .then((res) => {
