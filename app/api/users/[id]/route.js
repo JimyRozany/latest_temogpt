@@ -1,8 +1,16 @@
 import prisma from "../../../../utils/db";
 import { updateUserSchema } from "../../../../utils/validationSchemas";
 
-export async function GET(request, { params }) {
-  const { id } = params;
+export async function GET(request, context) {
+
+ const { params } = context;   // params = Promise
+  const { id } = await params;  // ✅ فك الـ Promise
+
+  const userId = Number(id);
+
+
+ 
+
 
   try {
     const user = await prisma.user.findUnique({

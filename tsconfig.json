@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
@@ -12,7 +16,7 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "plugins": [
       {
         "name": "next"
@@ -23,7 +27,6 @@
     "next-env.d.ts",
     ".next/types/**/*.ts",
     "**/*.ts",
-
     "**/*.tsx",
     "app/api/categories/route.js",
     "app/api/users/register/route.js",
@@ -44,7 +47,10 @@
     "app/(pages)/dashboard/edit-user/[userId]/page.jsx",
     "old_middleware.js",
     "app/(pages)/dashboard/add-article/page.jsx",
-    "app/(pages)/test-ck/page.jsx"
+    "app/(pages)/test-ck/page.jsx",
+    ".next/dev/types/**/*.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }

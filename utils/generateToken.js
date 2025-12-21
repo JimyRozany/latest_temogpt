@@ -4,6 +4,8 @@ import jwt from "jsonwebtoken";
 export function generateToken({ id, username, email, role }) {
   // generate jwt token
   const secretKey = process.env.JWT_SECRET;
+  console.log("secretKey" , secretKey);
+  
   const token = jwt.sign(
     { userId: id, username: username, email: email, role: role },
     secretKey,

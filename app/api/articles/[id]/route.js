@@ -8,10 +8,17 @@ import prisma from "../../../../utils/db";
  * @access private  // authenticated user use endpoint
  */
 
-export async function GET(req, { params }) {
+export async function GET(req, context) {
+
+ const { params } = context;   // params = Promise
+  const { id } = await params;  // ✅ فك الـ Promise
+
+
+
   try {
-    const id = await params.id;
-    if (!params.id)
+
+    
+    if (!id)
       return Response.json({ message: "id is required" }, { status: 400 });
     const article = await prisma.article.findUnique({
       where: { id: parseInt(id) },
@@ -34,8 +41,13 @@ export async function GET(req, { params }) {
  * @desc update article
  * @access private  // authenticated user use endpoint
  */
-export async function PUT(req, { params }) {
-  const { id } = await params;
+export async function PUT(req, context) {
+
+ const { params } = context;   // params = Promise
+  const { id } = await params;  // ✅ فك الـ Promise
+
+ 
+
   const { title, body, categoryId, userId } = await req.json();
   try {
     // await updateArticleSchema.validate({ title, body, userId ,categoryId });
@@ -65,10 +77,16 @@ export async function PUT(req, { params }) {
  * @access private  // authenticated user use endpoint
  */
 
-export async function DELETE(req, { params }) {
+export async function DELETE(req, context) {
+
+ const { params } = context;   // params = Promise
+  const { id } = await params;  // ✅ فك الـ Promise
+
+ 
+
   try {
-    const id = await params.id;
-    if (!params.id)
+   
+    if (!id)
       return Response.json({ message: "id is required" }, { status: 400 });
     await prisma.article.delete({
       where: { id: parseInt(id) },

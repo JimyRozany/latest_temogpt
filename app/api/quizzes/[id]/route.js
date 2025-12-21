@@ -1,6 +1,9 @@
 import prisma from "../../../../utils/db";
-export async function GET(request, { params }) {
-  const id = params.id;
+export async function GET(request,  context) {
+
+ const { params } = context;   // params = Promise
+  const { id } = await params;  // ✅ فك الـ Promise
+
 
   try {
     const question = await prisma.question.findUnique({
@@ -24,9 +27,12 @@ export async function GET(request, { params }) {
   }
 }
 
-export async function PUT(request, { params }) {
+export async function PUT(request,  context) {
+
+ const { params } = context;   // params = Promise
+  const { id } = await params;  // ✅ فك الـ Promise
+
   const data = await request.json();
-  const { id } = await params;
   try {
     // ============== chatgpt code =============
     // Update the question
@@ -147,8 +153,12 @@ export async function PUT(request, { params }) {
   }
 }
 
-export async function DELETE(request, { params }) {
-  const { id } = await params;
+export async function DELETE(request,  context) {
+
+ const { params } = context;   // params = Promise
+  const { id } = await params;  // ✅ فك الـ Promise
+
+
 
   try {
     const deleteQuestion = await prisma.question.delete({
