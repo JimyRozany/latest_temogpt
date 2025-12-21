@@ -23,7 +23,7 @@
 //     setLoading(true);
 //     // get optional questions
 //     axios
-//       .post(`${apiURL}/quizzes/category`, { categoryId })
+//       .post(`/api/quizzes/category`, { categoryId })
 //       .then((response) => {
 //         console.log(response.data.data.questions);
 //         setQuestions(response.data.data.questions);
@@ -38,7 +38,7 @@
 
 //     // get user information
 //     axios
-//       .get(`${apiURL}/users/me`)
+//       .get(`/api/users/me`)
 //       .then((response) => {
 //         // console.log(response.data.user);
 //         // set user information
@@ -189,7 +189,7 @@ const TemoQuiz = () => {
   //  get all optional questions form database
   useEffect(() => {
     axios
-      .post(`${apiURL}/quizzes/category`, { categoryId })
+      .post(`/api/quizzes/category`, { categoryId })
       .then((response) => {
         setQuizName(response.data.data.name);
         setQuestions(response.data.data.questions);
@@ -203,7 +203,7 @@ const TemoQuiz = () => {
 
     // get user information
     axios
-      .get(`${apiURL}/users/me`)
+      .get(`/api/users/me`)
       .then((response) => {
         console.log(response.data.user);
         // set user information
@@ -223,7 +223,7 @@ const TemoQuiz = () => {
 
     // set open quiz
     axios
-      .post(`${apiURL}/open-quiz`, data)
+      .post(`/api/open-quiz`, data)
       .then((res) => console.log("send Open Quiz", res.data))
       .catch((error) => console.log(error));
   };
@@ -274,7 +274,7 @@ const TemoQuiz = () => {
     };
     // sned answer
     axios
-      .post(`${apiURL}/questions/short-answer`, userShortAnswer)
+      .post(`/api/questions/short-answer`, userShortAnswer)
       .then((response) => {
         console.log(response.data);
         toast.success("تم الارسال بنجاح");
@@ -307,13 +307,13 @@ const TemoQuiz = () => {
       userId: user.userId,
     };
     axios
-      .post(`${apiURL}/user-score`, data)
+      .post(`/api/user-score`, data)
       .then((res) => console.log("saved score"))
       .catch((err) => console.log(err));
 
     // get pass degree and check if user passed update score in database
     axios
-      .get(`${apiURL}/degree/pass-degree`)
+      .get(`/api/degree/pass-degree`)
       .then((res) => {
         const passDegrees = res.data.passDegrees;
         passDegrees.map((el) => {
@@ -324,7 +324,7 @@ const TemoQuiz = () => {
                 quizName,
               };
               axios
-                .put(`${apiURL}/score`, data)
+                .put(`/api/score`, data)
                 .then((res) => console.log(res.data))
                 .catch((error) => console.log(error));
             }

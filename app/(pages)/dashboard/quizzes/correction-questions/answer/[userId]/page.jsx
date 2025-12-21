@@ -23,7 +23,7 @@ const AnswerPage = () => {
   useEffect(() => {
     // get questions and answers
     axios
-      .post(`${apiURL}/questions/user-answers`, { categoryId, userId })
+      .post(`/api/questions/user-answers`, { categoryId, userId })
       .then((res) => {
         setUser(res.data.data[0]?.user);
         setCategory(res.data.data[0]?.category.name);

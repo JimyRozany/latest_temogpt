@@ -13,7 +13,7 @@ const ShortAnswerQuestionsPage = () => {
   useEffect(() => {
     // get all categories
     axios
-      .get(`${apiURL}/categories`)
+      .get(`/api/categories`)
       .then((response) => {
         const data = response.data.data;
         const cats = data.filter((c) => c.name != "programming");
@@ -23,7 +23,7 @@ const ShortAnswerQuestionsPage = () => {
       .catch((error) => console.log(error));
     //  get all questions
     // axios
-    //   .get(`${apiURL}/questions`)
+    //   .get(`/api/questions`)
     //   .then((response) => {
     //     setQuestions(response.data.data);
     //     console.log(response.data.data);
@@ -34,7 +34,7 @@ const ShortAnswerQuestionsPage = () => {
   const handleShowQuestions = (e, categoryId) => {
     e.preventDefault();
     axios
-      .post(`${apiURL}/questions/category`, { categoryId: categoryId })
+      .post(`/api/questions/category`, { categoryId: categoryId })
       .then((response) => {
         console.log(response.data.data.QuestionShortAnswer);
 
@@ -48,7 +48,7 @@ const ShortAnswerQuestionsPage = () => {
 
     if (confirm("هل انت متاكد من حذف هذا السؤال")) {
       try {
-        axios.delete(`${apiURL}/questions/${question.id}`).then((res) => {
+        axios.delete(`/api/questions/${question.id}`).then((res) => {
           handleShowQuestions(e, question.categoryId);
         });
       } catch (error) {

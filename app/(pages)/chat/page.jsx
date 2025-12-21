@@ -18,7 +18,7 @@ const ChatPage = () => {
   //  --------------- handle chat
   const { messages, input, handleInputChange, handleSubmit, isLoading } =
     useChat({
-      api: `${apiURL}/chat`, // Path to your API route
+      api: `/api/chat`, // Path to your API route
     });
 
   const date = new Date();
@@ -30,7 +30,7 @@ const ChatPage = () => {
 
   const authUser = () => {
     axios
-      .get(`${apiURL}/users/me`)
+      .get(`/api/users/me`)
       .then((res) => {
         setUser(res.data.user);
       })

@@ -19,7 +19,7 @@ const EditShortAnswerQuestion = () => {
 
   useEffect(() => {
     axios
-      .get(`${apiURL}/questions/${id}`)
+      .get(`/api/questions/${id}`)
       .then((response) => {
         console.log(response.data.data);
         setQuestion(response.data.data);
@@ -29,7 +29,7 @@ const EditShortAnswerQuestion = () => {
       });
 
     axios
-      .get(`${apiURL}/categories`)
+      .get(`/api/categories`)
       .then((response) => {
         // console.log(response.data.data);
         const data = response.data.data;
@@ -55,7 +55,7 @@ const EditShortAnswerQuestion = () => {
     setLoading(true);
     // call the api send request
     axios
-      .put(`${apiURL}/questions/${id}`, question)
+      .put(`/api/questions/${id}`, question)
       .then((response) => {
         toast.success("تم التعديل بنجاح");
         setQuestion({

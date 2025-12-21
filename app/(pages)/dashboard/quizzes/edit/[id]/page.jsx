@@ -32,7 +32,7 @@ const EditQuizPage = () => {
    */
   useEffect(() => {
     axios
-      .get(`${apiURL}/quizzes/${id}`)
+      .get(`/api/quizzes/${id}`)
       .then((response) => {
         // console.log(response.data.data.options[0].name);
         setQuestion(response.data.data);
@@ -88,7 +88,7 @@ const EditQuizPage = () => {
       });
 
     axios
-      .get(`${apiURL}/categories`)
+      .get(`/api/categories`)
       .then((response) => {
         // console.log(response.data.data);
         const data = response.data.data;
@@ -152,7 +152,7 @@ const EditQuizPage = () => {
     setLoading(true);
     // // call the api send request
     axios
-      .put(`${apiURL}/quizzes/${id}`, updatedQuestion)
+      .put(`/api/quizzes/${id}`, updatedQuestion)
       .then((response) => {
         toast.success("تم التعديل بنجاح");
         setQuestion({

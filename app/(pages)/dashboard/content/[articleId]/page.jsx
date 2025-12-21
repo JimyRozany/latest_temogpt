@@ -28,7 +28,7 @@ export default function EditArticle() {
 
     // get article by id
     axios
-      .get(`${apiURL}/articles/${articleId}`)
+      .get(`/api/articles/${articleId}`)
       .then((res) => {
         console.log(res.data.article);
         setArticle(res.data.article);
@@ -41,7 +41,7 @@ export default function EditArticle() {
       });
     // get all categories
     axios
-      .get(`${apiURL}/categories`)
+      .get(`/api/categories`)
       .then((res) => {
         // console.log(res.data.data);
         setCategories(res.data.data);
@@ -64,7 +64,7 @@ export default function EditArticle() {
 
     try {
       setLoading(true);
-      await axios.put(`${apiURL}/articles/${articleId}`, lastArticle);
+      await axios.put(`/api/articles/${articleId}`, lastArticle);
       toast.success("تم الحفظ بنجاح");
       setLoading(false);
       router.replace("/dashboard/content");

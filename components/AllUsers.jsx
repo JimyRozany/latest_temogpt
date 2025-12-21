@@ -10,7 +10,7 @@ const AllUsers = () => {
   // get all users
   const getUsers = () => {
     axios
-      .get(`${apiURL}/users/all`)
+      .get(`/api/users/all`)
       .then((res) => {
         setUsers(res.data.data);
         console.log(res.data.data);
@@ -25,7 +25,7 @@ const AllUsers = () => {
     e.preventDefault();
     if (confirm("هل انت متاكد من حدف هذا المستخدم")) {
       try {
-        await axios.delete(`${apiURL}/users/${id}`);
+        await axios.delete(`/api/users/${id}`);
         getUsers();
       } catch (error) {
         console.log(error);

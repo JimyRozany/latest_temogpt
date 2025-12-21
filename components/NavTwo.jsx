@@ -19,7 +19,7 @@ const NavTwo = () => {
 
   useEffect(() => {
     axios
-      .get(`${apiURL}/users/me`)
+      .get(`/api/users/me`)
       .then((res) => {
         // console.log(res.data.user);
         setAuthUser(res.data.user);

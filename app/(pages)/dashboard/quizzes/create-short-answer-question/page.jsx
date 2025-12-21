@@ -15,7 +15,7 @@ const CreateShortAnswerQuestion = () => {
 
   useEffect(() => {
     axios
-      .get(`${apiURL}/categories`)
+      .get(`/api/categories`)
       .then((response) => {
         // console.log(response.data.data);
         const data = response.data.data;
@@ -42,7 +42,7 @@ const CreateShortAnswerQuestion = () => {
     // call the api send request
     //DOTO: change the true URL
     axios
-      .post(`${apiURL}/questions`, question)
+      .post(`/api/questions`, question)
       .then((response) => {
         toast.success("تم الاضافة بنجاح");
         setQuestion({

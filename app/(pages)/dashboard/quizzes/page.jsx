@@ -19,7 +19,7 @@ const QuizzesPage = () => {
   const [showForm, setShowForm] = useState(false);
   useEffect(() => {
     axios
-      .get(`${apiURL}/categories`)
+      .get(`/api/categories`)
       .then((response) => {
         const data = response.data.data;
         const cats = data.filter((c) => c.name != "programming");
@@ -32,7 +32,7 @@ const QuizzesPage = () => {
   const handlePassDegree = (e, catId) => {
     e.preventDefault();
     axios
-      .get(`${apiURL}/degree/${catId}`)
+      .get(`/api/degree/${catId}`)
       .then((res) => {
         console.log(res.data);
         setPassDegree(res.data.data);
@@ -47,7 +47,7 @@ const QuizzesPage = () => {
     //   categoryId: passDegree.categoryId,
     // };
     axios
-      .put(`${apiURL}/degree/pass-degree`, passDegree)
+      .put(`/api/degree/pass-degree`, passDegree)
       .then((res) => {
         console.log(res.data);
         toast.success("تم الاضافة بنجاح");

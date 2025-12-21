@@ -16,7 +16,7 @@ const EditUser = () => {
 
   useEffect(() => {
     axios
-      .get(`${apiURL}/users/${userId}`)
+      .get(`/api/users/${userId}`)
       .then((res) => {
         console.log(res.data.data);
         setUser(res.data.data);
@@ -31,7 +31,7 @@ const EditUser = () => {
     // call api to send data
     try {
       setLoading(true);
-      const res = await axios.put(`${apiURL}/users/${userId}`, user);
+      const res = await axios.put(`/api/users/${userId}`, user);
 
       // console.log(res);
       toast.success("تم تحديث البيانات بنجاح ");

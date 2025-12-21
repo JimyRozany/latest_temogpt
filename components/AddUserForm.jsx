@@ -24,7 +24,7 @@ const AddUserForm = () => {
     if (password === "") return toast.error("كلمة المرور مطلوبة");
     try {
       setLoading(true);
-      await axios.post(`${apiURL}/users/register`, {
+      await axios.post(`/api/users/register`, {
         username,
         email,
         password,

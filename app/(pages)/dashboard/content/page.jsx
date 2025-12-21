@@ -18,7 +18,7 @@ const ContentPage = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`${apiURL}/categories`)
+      .get(`/api/categories`)
       .then((res) => {
         console.log(res.data);
         setCategories(res.data.data);
@@ -34,7 +34,7 @@ const ContentPage = () => {
     e.preventDefault();
     setLoading(true);
     axios
-      .post(`${apiURL}/articles/articles-by-category`, {
+      .post(`/api/articles/articles-by-category`, {
         categoryId: id,
       })
       .then((res) => {
@@ -52,7 +52,7 @@ const ContentPage = () => {
     if (confirm("are you sure you want to delete this article?")) {
       setLoading(true);
       axios
-        .delete(`${apiURL}/articles/${id}`)
+        .delete(`/api/articles/${id}`)
         .then((res) => {
           console.log(res.data);
           // setArticles(articles.filter((article) => article.id !== id));

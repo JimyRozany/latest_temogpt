@@ -102,7 +102,7 @@ export default function Layout({ children }) {
 
   useEffect(() => {
     axios
-      .get(`${apiURL}/categories`)
+      .get(`/api/categories`)
       .then((res) => {
         const cats = res.data.data.filter((cat) => cat.name !== "programming");
 
@@ -119,7 +119,7 @@ export default function Layout({ children }) {
   useEffect(() => {
     if (user.userId) {
       axios
-        .get(`${apiURL}/open-quiz/${user.userId}`)
+        .get(`/api/open-quiz/${user.userId}`)
         .then((res) => {
           setOpenQuizzes(res.data.data);
           console.log(res.data.data);

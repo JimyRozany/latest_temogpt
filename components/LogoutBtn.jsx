@@ -9,7 +9,7 @@ const LogoutBtn = ( {className}) => {
   const handleLogout = () => {
     setLoading(true);
     axios
-      .get(`${apiURL}/clear-cookie`)
+      .get(`/api/clear-cookie`)
       .then((res) => {
         router.replace("/login");
         setLoading(false);

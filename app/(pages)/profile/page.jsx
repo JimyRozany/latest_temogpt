@@ -30,7 +30,7 @@ const ProfilePage = () => {
 
   const getAuthUser = async () => {
     setLoading(true);
-    const response = await axios.get(`${apiURL}/me-two`);
+    const response = await axios.get(`/api/me-two`);
 
     setUser(response.data.user);
     calculateScore(response.data.user);

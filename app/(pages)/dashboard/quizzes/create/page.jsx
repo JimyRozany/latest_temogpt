@@ -26,7 +26,7 @@ const CreateQuiz = () => {
    */
   useEffect(() => {
     axios
-      .get(`${apiURL}/categories`)
+      .get(`/api/categories`)
       .then((response) => {
         // console.log(response.data.data);
         const data = response.data.data;
@@ -73,7 +73,7 @@ const CreateQuiz = () => {
     setLoading(true);
     // call the api send request
     axios
-      .post(`${apiURL}/quizzes`, updatedQuestion)
+      .post(`/api/quizzes`, updatedQuestion)
       .then((response) => {
         console.log(response.data);
         toast.success("تم الاضافة بنجاح");

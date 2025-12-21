@@ -29,7 +29,7 @@ export default function AddArticle() {
   useEffect(() => {
     // get user information
     axios
-      .get(`${apiURL}/users/me`)
+      .get(`/api/users/me`)
       .then((res) => {
         setUser(res.data.user);
         setArticle({ ...article, userId: res.data.user.userId });
@@ -38,7 +38,7 @@ export default function AddArticle() {
       .catch((error) => console.log(error));
     // get all categories
     axios
-      .get(`${apiURL}/categories`)
+      .get(`/api/categories`)
       .then((res) => {
         // console.log(res.data.data);
         setCategories(res.data.data);
@@ -62,7 +62,7 @@ export default function AddArticle() {
 
     try {
       setLoading(true);
-      await axios.post(`${apiURL}/articles`, lastArticle);
+      await axios.post(`/api/articles`, lastArticle);
       toast.success("تم الاضافة بنجاح");
       setArticle({ title: "", body: "", userId: "", categoryId: "" });
       setEditorData("");

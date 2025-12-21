@@ -11,7 +11,7 @@ const CorrectingQuestionsPage = () => {
   const [users, setUsers] = useState([]);
   useEffect(() => {
     axios
-      .get(`${apiURL}/categories`)
+      .get(`/api/categories`)
       .then((res) => {
         const cats = res.data.data.filter((cat) => cat.name !== "programming");
         console.log(cats);
@@ -26,7 +26,7 @@ const CorrectingQuestionsPage = () => {
   const handleShowUsers = (e, catId) => {
     e.preventDefault();
     axios
-      .post(`${apiURL}/questions/category-users`, { categoryId: catId })
+      .post(`/api/questions/category-users`, { categoryId: catId })
       .then((res) => {
         console.log(res.data.data);
         

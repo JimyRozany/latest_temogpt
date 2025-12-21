@@ -14,7 +14,7 @@ const OptionalQuestionPage = () => {
 
   useEffect(() => {
     axios
-      .get(`${apiURL}/categories`)
+      .get(`/api/categories`)
       .then((response) => {
         const data = response.data.data;
         const cats = data.filter((c) => c.name != "programming");
@@ -27,7 +27,7 @@ const OptionalQuestionPage = () => {
   const handleShowQuestions = (e, categoryId) => {
     e.preventDefault();
     axios
-      .post(`${apiURL}/quizzes/category`, { categoryId: categoryId })
+      .post(`/api/quizzes/category`, { categoryId: categoryId })
       .then((response) => {
         setQuestions(response.data.data.questions);
       })
@@ -39,7 +39,7 @@ const OptionalQuestionPage = () => {
 
     if (confirm("هل انت متاكد من حذف هذا السؤال")) {
       try {
-        axios.delete(`${apiURL}/quizzes/${question.id}`).then((res) => {
+        axios.delete(`/api/quizzes/${question.id}`).then((res) => {
           handleShowQuestions(e, question.categoryId);
         });
       } catch (error) {
