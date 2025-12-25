@@ -1,144 +1,173 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
+// ==============================
+// Prisma Generator
+// ==============================
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["referentialActions"]
+  provider = "prisma-client-js"
 }
 
+// ==============================
+// Database
+// ==============================
 datasource db {
   provider = "sqlite"
   url      = "file:./dev.db"
-  // url      = env("DATABASE_URL")
 }
 
+// ==============================
+// Enums
+// ==============================
+enum Role {
+  ADMIN
+  STUDENT
+  CHAT_STUDENT
+}
+
+enum QuestionType {
+  MCQ
+  ESSAY
+}
+
+// ==============================
+// User
+// ==============================
 model User {
-  id        Int       @id @default(autoincrement())
-  email     String    @unique
-  username  String    @unique // max length is 100 chart
-  password  String //if you need column is optional write ? after datatype 
-  // isAdmin   Boolean  @default(false)
-  role      String    @default("READER")
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  articles  Article[]
-
-  Score           Score[]
-  UserShortAnswer UserShortAnswer[]
-  UserScore       UserScore[]
-  OpenQuizOrNot   OpenQuizOrNot[]
-}
-
-// enum Role {
-//   ADMIN
-//   READER
-//   CHATTING
-// }
-
-model Article {
-  id         Int      @id @default(autoincrement())
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  title      String
-  body       String
-  //one-to-many relation between article and user
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId     Int
-  //one-to-many relation between article and category
-  categories Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  categoryId Int
-}
-
-model Category {
-  id                  Int                   @id @default(autoincrement())
-  name                String
-  articles            Article[]
-  questions           Question[]
-  QuestionShortAnswer QuestionShortAnswer[]
-  UserShortAnswer     UserShortAnswer[]
-  OpenQuizOrNot       OpenQuizOrNot[]
-
-  PassingDegree PassingDegree[]
-}
-
-model Score {
-  id          Int      @id @default(autoincrement())
-  html        Boolean?
-  php         Boolean?
-  programming Boolean?
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId      Int
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-}
-
-model Question {
-  id       Int      @id @default(autoincrement())
-  question String
-  answer   String
-  degree   Int
-  options  Option[] // Relation to options
-
-  //one-to-many relation between article and category
-  categories Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  categoryId Int
-
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  username  String   @unique
+  password  String
+  role      Role     @default(STUDENT)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  // QuestionDegree QuestionDegree[]
+
+  articles     Article[]
+  answers      Answer[]
+  examResults  ExamResult[]
+  chatSessions ChatSession[]
 }
 
+// ==============================
+// Article (Learning Content)
+// ==============================
+model Article {
+  id        Int      @id @default(autoincrement())
+  title     String
+  body      String
+  authorId  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  author User @relation(fields: [authorId], references: [id], onDelete: Cascade)
+}
+
+// ==============================
+// Subject (HTML, PHP, etc.)
+// ==============================
+model Subject {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+
+  exams Exam[]
+}
+
+// ==============================
+// Exam
+// ==============================
+model Exam {
+  id        Int      @id @default(autoincrement())
+  title     String
+  subjectId Int
+  passScore Int
+  isOpen    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  subject   Subject      @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  questions Question[]
+  results   ExamResult[]
+}
+
+// ==============================
+// Question (MCQ + Essay)
+// ==============================
+model Question {
+  id        Int          @id @default(autoincrement())
+  examId    Int
+  text      String
+  type      QuestionType
+  degree    Int
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  exam    Exam     @relation(fields: [examId], references: [id], onDelete: Cascade)
+  options Option[]
+  answers Answer[]
+}
+
+// ==============================
+// Option (for MCQ)
+// ==============================
 model Option {
-  id         Int      @id @default(autoincrement())
-  name       String
-  questionId Int
-  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
-}
-
-model QuestionShortAnswer {
-  id              Int               @id @default(autoincrement())
-  question        String
-  degree          Int
-  categoryId      Int
-  category        Category          @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  UserShortAnswer UserShortAnswer[]
-}
-
-model UserShortAnswer {
-  id              Int                 @id @default(autoincrement())
-  answer          String
-  userId          Int
-  user            User                @relation(fields: [userId], references: [id], onDelete: Cascade)
-  categoryId      Int
-  category        Category            @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  questionShortId Int
-  questionShort   QuestionShortAnswer @relation(fields: [questionShortId], references: [id], onDelete: Cascade)
-}
-
-model UserScore {
-  id     Int    @id @default(autoincrement())
-  score  Int
-  quiz   String
-  userId Int
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
-model PassingDegree {
-  id         Int      @id @default(autoincrement())
-  degree     Int
-  categoryId Int      @unique
-  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-}
-
-model OpenQuizOrNot {
   id         Int     @id @default(autoincrement())
-  openQuiz   Boolean
-  userId     Int
-  user       User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  categoryId Int
+  questionId Int
+  text       String
+  isCorrect  Boolean @default(false)
 
-  category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  question Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+}
+
+// ==============================
+// Answer (Student Answer)
+// ==============================
+model Answer {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  questionId Int
+  text       String
+  degree     Int? // null until graded
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  question Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, questionId])
+}
+
+// ==============================
+// Exam Result (Final Grade)
+// ==============================
+model ExamResult {
+  id       Int      @id @default(autoincrement())
+  userId   Int
+  examId   Int
+  score    Int
+  passed   Boolean
+  gradedAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  exam Exam @relation(fields: [examId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, examId])
+}
+
+// ==============================
+// Chat (ChatGPT Learning)
+// ==============================
+model ChatSession {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  createdAt DateTime @default(now())
+
+  user     User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  messages ChatMessage[]
+}
+
+model ChatMessage {
+  id        Int      @id @default(autoincrement())
+  sessionId Int
+  role      String // "user" | "assistant"
+  content   String
+  createdAt DateTime @default(now())
+
+  session ChatSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
 }

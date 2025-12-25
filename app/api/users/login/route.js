@@ -1,73 +1,33 @@
-import prisma from "../../../../utils/db";
+import prisma from "@/utils/db";
 import bcrypt from "bcryptjs";
-import { loginSchema } from "../../../../utils/validationSchemas";
+import { loginSchema } from "@/utils/validationSchemas";
+import { setCookie } from "@/utils/auth";
 
-import { setCookie } from "../../../../utils/generateToken";
-
-/**
- * @method POST
- * @url ~/api/users/login
- * @desc login
- * @access public // any user can try login
- */
-
-export async function POST(request) {
+export async function POST(req) {
   try {
-    const requestData = await request.json();
-    // return Response.json({ message: "login successful" });
+    const data = await req.json();
 
-    const validation = loginSchema.safeParse(requestData);
+    const validation = loginSchema.safeParse(data);
     if (!validation.success) {
-      return Response.json(
-        {
-          error: validation.error.errors[0].path,
-          message: validation.error.errors[0].message,
-        },
+      return new Response(
+        JSON.stringify({ message: validation.error.errors[0].message }),
         { status: 400 }
       );
     }
 
-    const user = await prisma.user.findUnique({
-      where: { username: requestData.username },
+    const user = await prisma.user.findUnique({ where: { username: data.username } });
+    if (!user) return new Response(JSON.stringify({ message: "Invalid credentials" }), { status: 401 });
+
+    const isValid = await bcrypt.compare(data.password, user.password);
+    if (!isValid) return new Response(JSON.stringify({ message: "Invalid credentials" }), { status: 401 });
+
+    const cookie = setCookie({ id: user.id, username: user.username, email: user.email, role: user.role });
+
+    return new Response(JSON.stringify({ message: "Login successful" }), {
+      status: 200,
+      headers: { "Set-Cookie": cookie, "Content-Type": "application/json" },
     });
-
-    if (!user) {
-      return Response.json(
-        { message: "username or password incorrect" },
-        { status: 400 }
-      );
-    }
-
-    const isPasswordValid = await bcrypt.compare(
-      requestData.password,
-      user.password
-    );
-
-    if (!isPasswordValid) {
-      return Response.json({ message: "Invalid credentials" }, { status: 401 });
-    }
-
-    const cookie = setCookie({
-      id: user.id,
-      username: user.username,
-      email: user.email,
-      role: user.role,
-    });
-
-    return Response.json(
-      { message: "login successful" },
-      {
-        status: 200,
-        headers: {
-          "Set-Cookie": cookie,
-        },
-      }
-    );
   } catch (error) {
-    console.error("LOGIN ERROR:", error);
-    return Response.json(
-      { message: "internal server error", error },
-      { status: 500 }
-    );
+    return new Response(JSON.stringify({ message: "Server error", error }), { status: 500 });
   }
 }
