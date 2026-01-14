@@ -49,7 +49,7 @@
     "app/(pages)/dashboard/add-article/page.jsx",
     "app/(pages)/test-ck/page.jsx",
     ".next/dev/types/**/*.ts"
-  ],
+, "app/api/exams/[id]/submit/route.js", "app/services/grading.service.js", "app/services/exam.service.js", "app/services/attempt.service.js"  ],
   "exclude": [
     "node_modules"
   ]
